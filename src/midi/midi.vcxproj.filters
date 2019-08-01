@@ -57,6 +57,15 @@
     <ClInclude Include="io\endianness.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="io\read.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="io\vli.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="midi\primitives.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="app.cpp">
@@ -86,7 +95,25 @@
     <ClCompile Include="io\endianness.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tests\01-io\01-endianness-tests.cpp">
+    <ClCompile Include="io\vli.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="midi\primitives.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\02-midi\01-primitives\02-channel-show-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\02-midi\01-primitives\01-channel-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\02-midi\01-primitives\03-instruments-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\02-midi\01-primitives\04-note-number-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\02-midi\01-primitives\05-time-tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
