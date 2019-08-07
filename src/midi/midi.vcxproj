@@ -272,6 +272,9 @@
     <ClCompile Include="tests\02-midi\05-notes\05-read-notes-tests.cpp" />
     <ClCompile Include="tests\tests.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="command.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
