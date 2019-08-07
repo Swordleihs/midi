@@ -193,4 +193,183 @@ namespace midi {
 		return ostream;
 	}
 
+	//ChannelNoteCollector--------------------------------------------------------------------------------
+
+	void ChannelNoteCollector::meta(Duration dt, uint8_t type, std::unique_ptr<uint8_t[]> data, uint64_t data_size) {
+		(*this).current_time += dt;
+	}
+
+	void ChannelNoteCollector::sysex(Duration dt, std::unique_ptr<uint8_t[]> data, uint64_t data_size) {
+		(*this).current_time += dt;
+	}
+
+	void ChannelNoteCollector::note_on(Duration dt, Channel channel, NoteNumber note, uint8_t velocity) {
+		if (velocity == 0) {
+			(*this).note_off(dt, channel, note, velocity);
+		}
+		else {
+			(*this).current_time += dt;
+
+			if (channel == (*this).channel) {
+				if ((*this).velocity_notes[value(note)] != 0) {
+					(*this).note_off(Duration(0), channel, note, velocity);
+				}
+				(*this).velocity_notes[value(note)] = velocity;
+				(*this).starttime_notes[value(note)] = current_time;
+			}
+		}
+	}
+
+	void ChannelNoteCollector::note_off(Duration dt, Channel channel, NoteNumber note, uint8_t velocity) {
+		(*this).current_time += dt;
+
+		if (channel == (*this).channel) {
+			NOTE done = NOTE(note,
+				(*this).starttime_notes[value(note)],
+				((*this).current_time - (*this).starttime_notes[value(note)]),
+				(*this).velocity_notes[value(note)],
+				(*this).instrument);
+
+			note_receiver(done);
+			(*this).velocity_notes[value(note)] = 0;
+		}
+	}
+
+	void ChannelNoteCollector::polyphonic_key_pressure(Duration dt, Channel channel, NoteNumber note, uint8_t pressure) {
+		(*this).current_time += dt;
+	}
+
+	void ChannelNoteCollector::control_change(Duration dt, Channel channel, uint8_t controller, uint8_t value) {
+		(*this).current_time += dt;
+	}
+
+	void ChannelNoteCollector::program_change(Duration dt, Channel channel, Instrument program) {
+		(*this).current_time += dt;
+
+		if (channel == (*this).channel) {
+			(*this).instrument = program;
+		}
+	}
+
+	void ChannelNoteCollector::channel_pressure(Duration dt, Channel channel, uint8_t pressure) {
+		(*this).current_time += dt;
+	}
+
+	void ChannelNoteCollector::pitch_wheel_change(Duration dt, Channel channel, uint16_t wheel_position) {
+		(*this).current_time += dt;
+	}
+
+	//EventMultiCaster------------------------------------------------------------------------
+
+	void EventMulticaster::meta(Duration dt, uint8_t type, std::unique_ptr<uint8_t[]> data, uint64_t data_size) {
+		for (std::shared_ptr<EventReceiver> event : (*this).channel_caster) {
+			(*event).meta(dt, type, std::move(copy(data, data_size)), data_size);
+		}
+	}
+
+	void EventMulticaster::sysex(Duration dt, std::unique_ptr<uint8_t[]> data, uint64_t data_size) {
+		for (std::shared_ptr<EventReceiver> event : (*this).channel_caster) {
+			(*event).sysex(dt, std::move(copy(data, data_size)), data_size);
+		}
+	}
+
+	void EventMulticaster::note_on(Duration dt, Channel channel, NoteNumber note, uint8_t velocity) {
+		for (std::shared_ptr<EventReceiver> event : (*this).channel_caster) {
+			(*event).note_on(dt, channel, note, velocity);
+		}
+	}
+
+	void EventMulticaster::note_off(Duration dt, Channel channel, NoteNumber note, uint8_t velocity) {
+		for (std::shared_ptr<EventReceiver> event : (*this).channel_caster) {
+			(*event).note_off(dt, channel, note, velocity);
+		}
+	}
+
+	void EventMulticaster::polyphonic_key_pressure(Duration dt, Channel channel, NoteNumber note, uint8_t pressure) {
+		for (std::shared_ptr<EventReceiver> event : (*this).channel_caster) {
+			(*event).polyphonic_key_pressure(dt, channel, note, pressure);
+		}
+	}
+
+	void EventMulticaster::control_change(Duration dt, Channel channel, uint8_t controller, uint8_t value) {
+		for (std::shared_ptr<EventReceiver> event : (*this).channel_caster) {
+			(*event).control_change(dt, channel, controller, value);
+		}
+	}
+
+	void EventMulticaster::program_change(Duration dt, Channel channel, Instrument program) {
+		for (std::shared_ptr<EventReceiver> event : (*this).channel_caster) {
+			(*event).program_change(dt, channel, program);
+		}
+	}
+
+	void EventMulticaster::channel_pressure(Duration dt, Channel channel, uint8_t pressure) {
+		for (std::shared_ptr<EventReceiver> event : (*this).channel_caster) {
+			(*event).channel_pressure(dt, channel, pressure);
+		}
+	}
+
+	void EventMulticaster::pitch_wheel_change(Duration dt, Channel channel, uint16_t wheel_position) {
+		for (std::shared_ptr<EventReceiver> event : (*this).channel_caster) {
+			(*event).pitch_wheel_change(dt, channel, wheel_position);
+		}
+	}
+
+	std::unique_ptr<uint8_t[]> copy(std::unique_ptr<uint8_t[]>& to_copy, uint64_t data_size) {
+		auto result = std::make_unique<uint8_t[]>(data_size);
+		for (int i = 0; i != data_size; i++) {
+			result[i] = to_copy[i];
+		}
+		return result;
+	}
+
+	//NoteCollector---------------------------------------------------------------------------------
+
+	void NoteCollector::meta(Duration dt, uint8_t type, std::unique_ptr<uint8_t[]> data, uint64_t data_size) {
+		(*this).event_multicaster.meta(dt, type, std::move(data), data_size);
+	}
+
+	void NoteCollector::sysex(Duration dt, std::unique_ptr<uint8_t[]> data, uint64_t data_size) {
+		(*this).event_multicaster.sysex(dt, std::move(data), data_size);
+	}
+
+	void NoteCollector::note_on(Duration dt, Channel channel, NoteNumber note, uint8_t velocity) {
+		(*this).event_multicaster.note_on(dt, channel, note, velocity);
+	}
+
+	void NoteCollector::note_off(Duration dt, Channel channel, NoteNumber note, uint8_t velocity) {
+		(*this).event_multicaster.note_off(dt, channel, note, velocity);
+	}
+
+	void NoteCollector::polyphonic_key_pressure(Duration dt, Channel channel, NoteNumber note, uint8_t pressure) {
+		(*this).event_multicaster.polyphonic_key_pressure(dt, channel, note, pressure);
+	}
+
+	void NoteCollector::control_change(Duration dt, Channel channel, uint8_t controller, uint8_t value) {
+		(*this).event_multicaster.control_change(dt, channel, controller, value);
+	}
+
+	void NoteCollector::program_change(Duration dt, Channel channel, Instrument program) {
+		(*this).event_multicaster.program_change(dt, channel, program);
+	}
+
+	void NoteCollector::channel_pressure(Duration dt, Channel channel, uint8_t pressure) {
+		(*this).event_multicaster.channel_pressure(dt, channel, pressure);
+	}
+
+	void NoteCollector::pitch_wheel_change(Duration dt, Channel channel, uint16_t wheel_postition) {
+		(*this).event_multicaster.pitch_wheel_change(dt, channel, wheel_postition);
+	}
+
+	std::vector<NOTE> read_notes(std::istream& s) {
+		MTHD mthd;
+		read_mthd(s, &mthd);
+		uint16_t ntracks = mthd.ntracks;
+		std::vector<NOTE> notes;
+		for (int i = 0; i < ntracks; i++) {
+			NoteCollector noteCollector = NoteCollector([&notes](const NOTE& note) { notes.push_back(note); });
+			read_mtrk(s, noteCollector);
+		}
+		return notes;
+	}
 }

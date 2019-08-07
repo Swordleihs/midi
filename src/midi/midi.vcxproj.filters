@@ -107,10 +107,19 @@
     <ClCompile Include="midi\midi.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tests\02-midi\04-mtrk\13-mtrk-multiple-events-tests.cpp">
+    <ClCompile Include="tests\02-midi\05-notes\05-read-notes-tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="tests\02-midi\05-notes\01-note-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\02-midi\05-notes\02-channel-note-collector-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\02-midi\05-notes\03-event-multicaster-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\02-midi\05-notes\04-note-collector-tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="tests\01-io\01-endianness-tests.cpp">
@@ -126,6 +135,36 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="tests\01-io\05-read-variable-length-integer-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\02-midi\01-primitives\01-channel-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\02-midi\01-primitives\02-channel-show-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\02-midi\01-primitives\03-instruments-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\02-midi\01-primitives\04-note-number-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\02-midi\01-primitives\05-time-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\02-midi\02-chunk-headers\01-chunk-header-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\02-midi\02-chunk-headers\02-read-chunk-header-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\02-midi\02-chunk-headers\03-header-id-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\02-midi\03-mthd\01-mthd-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\02-midi\03-mthd\02-read-mthd-tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="tests\02-midi\04-mtrk\01-mtrk-auxiliary-tests.cpp">
@@ -164,34 +203,7 @@
     <ClCompile Include="tests\02-midi\04-mtrk\12-mtrk-pitch-wheel-tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tests\02-midi\03-mthd\01-mthd-tests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\02-midi\03-mthd\02-read-mthd-tests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\02-midi\02-chunk-headers\01-chunk-header-tests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\02-midi\02-chunk-headers\02-read-chunk-header-tests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\02-midi\02-chunk-headers\03-header-id-tests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\02-midi\01-primitives\01-channel-tests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\02-midi\01-primitives\02-channel-show-tests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\02-midi\01-primitives\03-instruments-tests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\02-midi\01-primitives\04-note-number-tests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\02-midi\01-primitives\05-time-tests.cpp">
+    <ClCompile Include="tests\02-midi\04-mtrk\13-mtrk-multiple-events-tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
