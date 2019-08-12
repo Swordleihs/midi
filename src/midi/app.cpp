@@ -78,8 +78,8 @@ int main(int argn, char* argv[]) {
 	uint32_t step = 1;
 	uint32_t scale = 2;
 	uint32_t note_height = 16;
-	string input_file = "C:\\Users\\Ruben Claes\\Desktop\\music.mid";
-	string output_file = "C:\\Users\\Ruben Claes\\Desktop\\frames\\frame-%d.bmp";
+	string input_file = "C:\\Users\\Ruben Claes\\Desktop\\Ucll\\2_S2\\Programmeren voor Multimedia\\Opdracht\\midi-files\\bohemian.mid";
+	string output_file = "C:\\Users\\Ruben Claes\\Desktop\\Ucll\\2_S2\\Programmeren voor Multimedia\\Opdracht\\output\\f%d.bmp";
 
 	//command definition
 	CommandLineParser cmd_parser;

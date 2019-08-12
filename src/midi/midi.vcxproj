@@ -273,7 +273,7 @@
     <ClCompile Include="tests\tests.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="command.txt" />
+    <Text Include="run.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -208,6 +208,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="command.txt" />
+    <Text Include="run.txt" />
   </ItemGroup>
 </Project>
